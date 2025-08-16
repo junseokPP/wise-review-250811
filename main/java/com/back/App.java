@@ -3,9 +3,9 @@ package com.back;
 import java.util.Scanner;
 
 public class App {
-        Scanner sc = new Scanner(System.in);
-        int lastId = 0,lastIndex=0;
-        WiseSaying[] wiseSayings = new WiseSaying[100];
+        private Scanner sc = new Scanner(System.in);
+        private int lastId = 0,lastIndex=0;
+        private WiseSaying[] wiseSayings = new WiseSaying[100];
 
     public void run(){
 
@@ -29,7 +29,7 @@ public class App {
         }
     }
 
-    public void actionModify(String cmd) {
+    private void actionModify(String cmd) {
         String[] commandBits = cmd.split("=");
 
         if(commandBits.length < 2){
@@ -65,7 +65,7 @@ public class App {
         modifyTargetWiseSaying.setAuthor(newAuthor);
     }
 
-    public int findIndexById(int id){
+    private int findIndexById(int id){
 
         for(int i = 0; i < lastIndex; i++){
             if(wiseSayings[i].getId() == id){
@@ -76,7 +76,7 @@ public class App {
         return -1;
     }
 
-    public void actionDelete(String cmd) {
+    private void actionDelete(String cmd) {
 
         String[] commandBits = cmd.split("=");
 
@@ -98,7 +98,7 @@ public class App {
         }
     }
 
-    public boolean delete(int id){
+    private boolean delete(int id){
 
         int deleteTargetIndex = findIndexById(id);
 
@@ -114,7 +114,7 @@ public class App {
         return true;
     }
 
-    public void actionWrite(){
+    private void actionWrite(){
 
         System.out.print("명언 : ");
         String saying = sc.nextLine();
@@ -126,12 +126,12 @@ public class App {
         System.out.println("%d번 명언이 등록되었습니다.".formatted(wiseSaying.getId()));
     }
 
-    public WiseSaying write(String saying, String author){
+    private WiseSaying write(String saying, String author){
         lastId++;
         return wiseSayings[lastIndex++] = new WiseSaying(lastId,saying,author);
     }
 
-    public void actionList(){
+    private void actionList(){
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
@@ -142,7 +142,7 @@ public class App {
         }
     }
 
-    public WiseSaying[] findListDesc(){
+    private WiseSaying[] findListDesc(){
 
         WiseSaying[] resultList = new WiseSaying[lastIndex];
         int resultListIndex = 0;
