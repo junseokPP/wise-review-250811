@@ -1,7 +1,9 @@
 package com.back;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Rq {
 
@@ -14,26 +16,22 @@ public class Rq {
         String[] commandBits = command.split("\\?");
 
         actionName = commandBits[0];
-        String queryString = "";
+        String queryString = commandBits.length > 1 ? commandBits[1] : "";
 
-        if (commandBits.length > 1) {
-            queryString = commandBits[1];
-        }
+        // 변수 = 조건 ? 값1 : 값2;
 
         String[] queryStringBits = queryString.split("&");
-        for (String param : queryStringBits) {
-            String[] paramBits = param.split("=");
-            String key = paramBits[0];
-            String value = null;
 
-            if (paramBits.length < 2) {
-                continue;
-            }
+        paramMap = Arrays.stream(queryStringBits)
+                .map(part -> part.split("="))
+                .filter(bits -> bits.length == 2 && bits[1] != null)
+                .collect(
+                        Collectors.toMap(
+                                bits -> bits[0],
+                                bits -> bits[1]
+                        )
+                );
 
-            value = paramBits[1];
-
-            paramMap.put(key, value);
-        }
     }
 
     public String getActionName() {
