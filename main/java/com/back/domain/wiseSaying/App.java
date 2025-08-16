@@ -1,4 +1,6 @@
-package com.back;
+package com.back.domain.wiseSaying;
+
+import com.back.domain.wiseSaying.controller.SystemController;
 
 import java.util.*;
 
@@ -7,6 +9,7 @@ public class App {
         private int lastId = 0;
         private List<WiseSaying> wiseSayings = new ArrayList<>();
         private Map<String , String> paramMap = new HashMap<>();
+        private SystemController systemController = new SystemController();
 
     public void run(){
 
@@ -27,6 +30,7 @@ public class App {
             } else if (actionName.startsWith("수정")) {
                 actionModify(rq);
             } else if (actionName.equals("종료")) {
+                systemController.exit();
                 return;
             }
         }

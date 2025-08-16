@@ -1,6 +1,4 @@
-package com.back;
-
-import java.util.Scanner;
+package com.back.domain.wiseSaying;
 
 public class Main {
     public static void main(String[] args) {
