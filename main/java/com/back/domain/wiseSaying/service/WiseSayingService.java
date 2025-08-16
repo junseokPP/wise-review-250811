@@ -8,19 +8,19 @@ import java.util.List;
 
 public class WiseSayingService {
 
-    private int lastId = 0;
     WiseSayingRepository wiseSayingRepository = new WiseSayingRepository();
 
     public void modify(WiseSaying wiseSaying, String newSaying, String newAuthor) {
         wiseSaying.setSaying(newSaying);
         wiseSaying.setAuthor(newAuthor);
+
+        wiseSayingRepository.save(wiseSaying);
     }
 
     public WiseSaying write(String saying, String author){
 
-        lastId++;
-        WiseSaying wiseSaying = new WiseSaying(lastId,saying,author);
-        wiseSayingRepository.save(wiseSaying);
+        WiseSaying wiseSaying = new WiseSaying(0,saying,author);
+        wiseSaying = wiseSayingRepository.save(wiseSaying);
 
         return wiseSaying;
     }

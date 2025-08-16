@@ -8,6 +8,8 @@ import java.util.List;
 public class WiseSayingRepository {
 
 
+    private int lastId = 0;
+
     private List<WiseSaying> wiseSayings = new ArrayList<>();
 
     public WiseSaying findByIdOrNull(int id){
@@ -23,8 +25,15 @@ public class WiseSayingRepository {
         return wiseSayings.removeIf(w -> w.getId() == id);
     }
 
-    public void save(WiseSaying wiseSaying){
-        wiseSayings.add(wiseSaying);
+    public WiseSaying  save(WiseSaying wiseSaying){
+
+        if(wiseSaying.isNew()){ //wiseSaying이 새로운 객체인 경우
+            lastId++;
+            wiseSaying.setId(lastId);
+            wiseSayings.add(wiseSaying);
+        }
+
+        return wiseSaying;
     }
 
     public List<WiseSaying> findListDesc(){
