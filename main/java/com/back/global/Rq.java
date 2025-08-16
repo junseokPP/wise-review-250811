@@ -1,4 +1,4 @@
-package com.back.domain.wiseSaying;
+package com.back.global;
 
 import java.util.Arrays;
 import java.util.HashMap;
