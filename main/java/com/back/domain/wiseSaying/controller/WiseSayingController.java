@@ -19,7 +19,7 @@ public class WiseSayingController {
     public void actionModify(Rq rq) {
 
         int id = rq.getParamAsInt("id",-1);
-        WiseSaying wiseSaying  = wiseSayingService.findByIdOrNull(id);
+        WiseSaying wiseSaying  = wiseSayingService.getByIdOrNull(id);
 
         if(wiseSaying == null){
             System.out.println("%d 명언은 존재하지 않습니다.".formatted(id));
