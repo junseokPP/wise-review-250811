@@ -1,7 +1,6 @@
 package com.back;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class App {
         private Scanner sc = new Scanner(System.in);
@@ -17,57 +16,24 @@ public class App {
             System.out.print("명령) ");
             String cmd = sc.nextLine();
 
-            if (cmd.equals("등록")) {
+            Rq rq = new Rq(cmd);
+            String actionName = rq.getActionName();
+            if (actionName.equals("등록")) {
                 actionWrite();
-            } else if (cmd.equals("목록")) {
+            } else if (actionName.equals("목록")) {
                 actionList();
-            } else if (cmd.startsWith("삭제")) {
-                setParams(cmd);// "삭제" 또는 "삭제?id=1" 모두 허용
-                actionDelete();
-            } else if (cmd.startsWith("수정")) {
-                setParams(cmd);
-                actionModify();
-            } else if (cmd.equals("종료")) {
+            } else if (actionName.startsWith("삭제")) {
+                actionDelete(rq);
+            } else if (actionName.startsWith("수정")) {
+                actionModify(rq);
+            } else if (actionName.equals("종료")) {
                 return;
             }
         }
     }
 
-    private void setParams(String command){
-
-
-
-        String[] commandBits = command.split("\\?");
-
-        String actionName = commandBits[0];
-        String queryString = "";
-
-        if(commandBits.length > 1){
-            queryString = commandBits[1];
-        }
-
-        String[] queryStringBits = queryString.split("&");
-        for(String param : queryStringBits){
-            String[] paramBits = param.split("=");
-            String key = paramBits[0];
-            String value = null;
-
-            if(paramBits.length < 2){
-                continue;
-            }
-
-            value = paramBits[1];
-
-            paramMap.put(key, value);
-        }
-    }
-
-    private String getParam(String key){
-        return paramMap.get(key);
-    }
-
-    private void actionModify() {
-        String idStr  = getParam("id");
+    private void actionModify(Rq rq) {
+        String idStr  = rq.getParam("id");
 
         int id = Integer.parseInt(idStr);
 
@@ -109,10 +75,10 @@ public class App {
 //
 //    }
 
-    private void actionDelete() {
+    private void actionDelete(Rq rq) {
 
 
-        String idStr = getParam("id");
+        String idStr = rq.getParam("id");
         int id = Integer.parseInt(idStr);
 
         boolean result = delete(id);
