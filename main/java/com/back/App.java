@@ -40,7 +40,6 @@ public class App {
 
         WiseSaying wiseSaying = write(saying,author);
 
-
         System.out.println("%d번 명언이 등록되었습니다.".formatted(lastId));
     }
 
@@ -52,14 +51,23 @@ public class App {
     public void actionList(){
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
-        for(int i=0;i<lastIndex;i++){
-            WiseSaying ws = wiseSaying[i];
 
-            if(ws == null){
-                break;
-            }
+        WiseSaying[] wiseSayings = findListDesc();
 
+        for(WiseSaying ws : wiseSayings){
             System.out.println("%d / %s / %s".formatted(ws.id,ws.author,ws.saying));
         }
+    }
+
+    public WiseSaying[] findListDesc(){
+
+        WiseSaying[] resultList = new WiseSaying[lastIndex];
+        int resultListIndex = 0;
+
+        for(int i=lastIndex-1;i>=0;i--){
+            resultList[resultListIndex++]=wiseSaying[i];
+        }
+
+        return resultList;
     }
 }
