@@ -1,11 +1,13 @@
 package com.back;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
         private Scanner sc = new Scanner(System.in);
-        private int lastId = 0,lastIndex=0;
-        private WiseSaying[] wiseSayings = new WiseSaying[100];
+        private int lastId = 0;
+        private List<WiseSaying> wiseSayings = new ArrayList<>();
 
     public void run(){
 
@@ -47,7 +49,7 @@ public class App {
             return;
         }
 
-        WiseSaying modifyTargetWiseSaying = wiseSayings[modifyTargetIndex];
+        WiseSaying modifyTargetWiseSaying = wiseSayings.get(modifyTargetIndex);
 
 
         System.out.println("명언(기존) : %s".formatted(modifyTargetWiseSaying.getSaying()));
@@ -67,8 +69,8 @@ public class App {
 
     private int findIndexById(int id){
 
-        for(int i = 0; i < lastIndex; i++){
-            if(wiseSayings[i].getId() == id){
+        for(int i = 0; i < wiseSayings.size(); i++){
+            if(wiseSayings.get(i).getId() == id){
                 return i;
             }
         }
@@ -106,11 +108,7 @@ public class App {
             return false;
         }
 
-        for(int i = deleteTargetIndex; i < lastIndex; i++){
-            wiseSayings[i] = wiseSayings[i+1];
-        }
-
-        lastIndex--;
+        wiseSayings.remove(deleteTargetIndex);
         return true;
     }
 
@@ -128,29 +126,24 @@ public class App {
 
     private WiseSaying write(String saying, String author){
         lastId++;
-        return wiseSayings[lastIndex++] = new WiseSaying(lastId,saying,author);
+        WiseSaying wiseSaying = new WiseSaying(lastId,saying,author);
+        wiseSayings.add(wiseSaying);
+        return wiseSaying;
     }
 
     private void actionList(){
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        WiseSaying[] wiseSayings = findListDesc();
+        List<WiseSaying> wiseSayings = findListDesc();
 
         for(WiseSaying wiseSaying : wiseSayings){
             System.out.println("%d / %s / %s".formatted(wiseSaying.getId(),wiseSaying.getAuthor(),wiseSaying.getSaying()));
         }
     }
 
-    private WiseSaying[] findListDesc(){
+    private List<WiseSaying> findListDesc(){
 
-        WiseSaying[] resultList = new WiseSaying[lastIndex];
-        int resultListIndex = 0;
-
-        for(int i=lastIndex-1;i>=0;i--){
-            resultList[resultListIndex++]=wiseSayings[i];
-        }
-
-        return resultList;
+        return wiseSayings.reversed();
     }
 }
