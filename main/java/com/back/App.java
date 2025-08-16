@@ -17,23 +17,66 @@ public class App {
 
             if (cmd.equals("등록")) {
                 actionWrite();
-
             } else if (cmd.equals("목록")) {
                 actionList();
-
             } else if (cmd.startsWith("삭제")) {        // "삭제" 또는 "삭제?id=1" 모두 허용
                 actionDelete(cmd);
-
+            } else if (cmd.startsWith("수정")) {
+                actionModify(cmd);
             } else if (cmd.equals("종료")) {
                 return;
-
-            } else {
-                System.out.println("알 수 없는 명령입니다.");
             }
         }
     }
 
-    private void actionDelete(String cmd) {
+    public void actionModify(String cmd) {
+        String[] commandBits = cmd.split("=");
+
+        if(commandBits.length < 2){
+            System.out.println("번호를 입력해주세요.");
+            return;
+        }
+
+        String idStr = commandBits[1];
+        int id = Integer.parseInt(idStr);
+
+        int modifyTargetIndex = findIndexById(id);
+
+        if(modifyTargetIndex == -1){
+            System.out.println("%d 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+
+        WiseSaying modifyTargetWiseSaying = wiseSayings[modifyTargetIndex];
+
+
+        System.out.println("명언(기존) : %s".formatted(modifyTargetWiseSaying.saying));
+        System.out.print("명언 :");
+        String newSaying = sc.nextLine();
+        System.out.println("작가(기존) : %s".formatted(modifyTargetWiseSaying.author));
+        System.out.print("작가 :");
+        String newAuthor = sc.nextLine();
+
+        modify(modifyTargetWiseSaying,newSaying,newAuthor);
+    }
+
+    private void modify(WiseSaying modifyTargetWiseSaying, String newSaying, String newAuthor) {
+        modifyTargetWiseSaying.saying = newSaying;
+        modifyTargetWiseSaying.author = newAuthor;
+    }
+
+    public int findIndexById(int id){
+
+        for(int i = 0; i < lastIndex; i++){
+            if(wiseSayings[i].id == id){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public void actionDelete(String cmd) {
 
         String[] commandBits = cmd.split("=");
 
@@ -56,14 +99,8 @@ public class App {
     }
 
     public boolean delete(int id){
-        int deleteTargetIndex = -1; // 삭제하고 싶은 명언이 저장된 위치
 
-        for(int i = 0; i < lastIndex; i++){
-            if(wiseSayings[i].id == id){
-                deleteTargetIndex = i;
-                break;
-            }
-        }
+        int deleteTargetIndex = findIndexById(id);
 
         if(deleteTargetIndex == -1){
             return false;
