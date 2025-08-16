@@ -1,9 +1,13 @@
 package com.back.domain.wiseSaying;
 
+import java.time.LocalDateTime;
+
 public class WiseSaying {
     private int id;
     private String saying;
     private String author;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     public WiseSaying(){}
 
@@ -15,6 +19,22 @@ public class WiseSaying {
 
     public boolean isNew(){
         return id == 0;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     public int getId() {

@@ -82,7 +82,8 @@ public class WiseSayingController {
         List<WiseSaying> wiseSayings = wiseSayingService.findListDesc();
 
         for(WiseSaying wiseSaying : wiseSayings){
-            System.out.println("%d / %s / %s".formatted(wiseSaying.getId(),wiseSaying.getAuthor(),wiseSaying.getSaying()));
+            System.out.println("%d / %s / %s / %s / %s".formatted(wiseSaying.getId(),
+                    wiseSaying.getAuthor(),wiseSaying.getSaying(),wiseSaying.getCreatedDate(),wiseSaying.getModifiedDate()));
         }
     }
 
