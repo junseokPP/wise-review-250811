@@ -33,10 +33,9 @@ public class App {
     }
 
     private void actionModify(Rq rq) {
-        String idStr  = rq.getParam("id");
 
-        int id = Integer.parseInt(idStr);
 
+        int id = rq.getParamAsInt("id",-1);
         WiseSaying wiseSaying  = findByIdOrNull(id);
 
         if(wiseSaying == null){
@@ -77,10 +76,7 @@ public class App {
 
     private void actionDelete(Rq rq) {
 
-
-        String idStr = rq.getParam("id");
-        int id = Integer.parseInt(idStr);
-
+        int id =   rq.getParamAsInt("id",-1);
         boolean result = delete(id);
 
         if(result){
