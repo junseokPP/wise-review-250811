@@ -1,6 +1,7 @@
 package com.back.domain.wiseSaying.controller;
 
 import com.back.domain.wiseSaying.Rq;
+import com.back.domain.wiseSaying.Ut;
 import com.back.domain.wiseSaying.WiseSaying;
 import com.back.domain.wiseSaying.service.WiseSayingService;
 
@@ -76,14 +77,16 @@ public class WiseSayingController {
 
 
     public void actionList(){
-        System.out.println("번호 / 작가 / 명언");
+        System.out.println("번호 / 작가 / 명언 / 작성날짜 / 수정날짜");
         System.out.println("----------------------");
 
         List<WiseSaying> wiseSayings = wiseSayingService.findListDesc();
 
         for(WiseSaying wiseSaying : wiseSayings){
             System.out.println("%d / %s / %s / %s / %s".formatted(wiseSaying.getId(),
-                    wiseSaying.getAuthor(),wiseSaying.getSaying(),wiseSaying.getCreatedDate(),wiseSaying.getModifiedDate()));
+                    wiseSaying.getAuthor(),wiseSaying.getSaying(),
+                    Ut.getFormattedDate(wiseSaying.getCreatedDate()),
+                    Ut.getFormattedDate(wiseSaying.getModifiedDate())));
         }
     }
 
