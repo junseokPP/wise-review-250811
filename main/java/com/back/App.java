@@ -9,13 +9,11 @@ public class App {
 
     public void run(){
 
-
         System.out.println("== 명언 앱 ==");
 
         while(true){
             System.out.print("명령) ");
             String cmd = sc.nextLine();
-
 
             switch (cmd) {
                 case "등록" ->{
@@ -34,17 +32,21 @@ public class App {
     }
 
     public void actionWrite(){
-        String saying;
-        String author;
 
         System.out.print("명언 : ");
-        saying = sc.nextLine();
+        String saying = sc.nextLine();
         System.out.print("작가 : ");
-        author = sc.nextLine();
-        lastId++;
+        String author = sc.nextLine();
 
-        wiseSaying[lastIndex++] = new WiseSaying(lastId,saying,author);
+        WiseSaying wiseSaying = write(saying,author);
+
+
         System.out.println("%d번 명언이 등록되었습니다.".formatted(lastId));
+    }
+
+    public WiseSaying write(String saying, String author){
+        lastId++;
+        return wiseSaying[lastIndex++] = new WiseSaying(lastId,saying,author);
     }
 
     public void actionList(){
