@@ -99,15 +99,9 @@ public class App {
     }
 
     private boolean delete(int id){
-
-        int deleteTargetIndex = findIndexById(id);
-
-        if(deleteTargetIndex == -1){
-            return false;
-        }
-
-        wiseSayings.remove(deleteTargetIndex);
-        return true;
+        //for문으로 break를 거는게 성능은 더좋다
+        //removeIf를 사용하는 이유는 가독성 때문
+        return wiseSayings.removeIf(w -> w.getId() == id);
     }
 
     private void actionWrite(){
