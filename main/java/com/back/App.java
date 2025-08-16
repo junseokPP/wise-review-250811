@@ -15,35 +15,45 @@ public class App {
             System.out.print("명령) ");
             String cmd = sc.nextLine();
 
-            switch (cmd) {
-                case "등록" ->{
-                    actionWrite();
-                }
-                case "목록" ->{
-                    actionList();
-                }
-                case "삭제?id=1" ->{
-                    actionDelete();
-                }case "종료" ->{
-                    return;
-                }
+            if (cmd.equals("등록")) {
+                actionWrite();
+
+            } else if (cmd.equals("목록")) {
+                actionList();
+
+            } else if (cmd.startsWith("삭제")) {        // "삭제" 또는 "삭제?id=1" 모두 허용
+                actionDelete(cmd);
+
+            } else if (cmd.equals("종료")) {
+                return;
+
+            } else {
+                System.out.println("알 수 없는 명령입니다.");
             }
         }
     }
 
-    private void actionDelete() {
+    private void actionDelete(String cmd) {
 
-        delete();
+        String[] commandBits = cmd.split("=");
 
+        if(commandBits.length < 2){
+            System.out.println("번호를 입력해주세요.");
+            return;
+        }
 
+        String idStr = commandBits[1];
+        int id = Integer.parseInt(idStr);
+
+        delete(id);
         System.out.println("1번 명언이 삭제되었습니다.");
     }
 
-    public void delete(){
+    public void delete(int id){
         int deleteTargetIndex = -1; // 삭제하고 싶은 명언이 저장된 위치
 
         for(int i = 0; i < lastIndex; i++){
-            if(wiseSayings[i].id == 1){
+            if(wiseSayings[i].id == id){
                 deleteTargetIndex = i;
             }
         }
