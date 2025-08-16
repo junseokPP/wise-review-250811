@@ -32,10 +32,12 @@ public class Main {
                    System.out.println("----------------------");
                    for(int i=0;i<lastIndex;i++){
                        WiseSaying ws = wiseSaying[i];
-                       System.out.println("%d / %s / %s".formatted(ws.id,ws.saying,ws.author));
+                       System.out.println("%d / %s / %s".formatted(ws.id,ws.author,ws.saying));
                    }
                }
-               case "종료" ->{
+               case "삭제?id=1" ->{
+                   System.out.println("1번 명언이 삭제되었습니다.");
+               }case "종료" ->{
                    return;
                }
            }
